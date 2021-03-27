@@ -1,7 +1,7 @@
 {
-  "name": "formik-wizard",
+  "name": "wizard",
   "version": "0.0.1",
-  "description": "A wizard helper for Formik forms.",
+  "description": "A wizard helper for multi-page forms.",
   "main": "index.js",
   "license": "MIT",
   "private": false,
