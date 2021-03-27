@@ -1,29 +1,73 @@
 import { createContext, useContext } from 'react';
 
 export const WizardContext = createContext(undefined);
+
 export const useWizard = () => {
-  const { setStep, step, total, values, setValues } = useContext(WizardContext);
+  const {
+    setStep,
+    step,
+    values,
+    setValues,
+    setOptional,
+    optional,
+  } = useContext(WizardContext);
 
+  /**
+   * Go to the next step in the wizard.
+   */
   const next = () => {
-    setStep(Math.min(step + 1, total));
+    setOptional(undefined);
+    setStep(step + 1);
   };
 
+  /**
+   * Go to the previous step in the wizard.
+   * If the current step is optional, go back to the previous non-optional step.
+   */
   const back = () => {
-    setStep(Math.max(step - 1, 0));
+    if (optional) {
+      setOptional(undefined);
+    } else {
+      setStep(Math.max(step - 1, 0));
+    }
   };
 
+  /**
+   * Jump to a specific step in the wizard.
+   * @param to
+   */
   const go = (to: number, optional?: boolean) => {
-    setStep(to);
+    if (optional) {
+      setOptional(to);
+    } else {
+      setStep(to);
+      setOptional(undefined);
+    }
   };
 
-  const submit = (fields: unknown) => {
-    setValues((values) => (values[step] = fields));
-    next();
+  /**
+   * Stores the provided key/value pairs.
+   * @param fields
+   */
+  const store = (fields: { [key: string]: unknown }) => {
+    setValues((values) => {
+      return { ...values, ...fields };
+    });
   };
 
-  const clear = (step?: number) => {
-    setValues(step !== undefined ? [...values].slice(step, 1) : []);
+  /**
+   * Remove values by key.
+   * @param keys List of keys to be removed. If none are provided, all the values are removed.
+   */
+  const clear = (keys?: string[]) => {
+    setValues((values) =>
+      keys
+        ? Object.fromEntries(
+            Object.entries(values).filter(([key]) => !keys.includes(key))
+          )
+        : {}
+    );
   };
 
-  return { next, back, go, step, submit, clear, values };
+  return { next, back, go, step, store, clear, values, optional, setOptional };
 };
