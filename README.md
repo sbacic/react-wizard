@@ -12,6 +12,10 @@ Wizard is a React library for handling multi-page forms.
 
 The API consists of two parts: React components and a custom React hook.
 
+### Installation
+
+`yarn add sbacic/wizard`
+
 **\<Wizard\>**
 Your form pages should be wrapped in this to receive the Wizard context. It accepts the following props:
 
