@@ -2,10 +2,12 @@
   "name": "wizard",
   "version": "1.0.0",
   "description": "A wizard helper for React multistep forms.",
-  "main": "index.js",
+  "main": "dist/index.js",
   "license": "MIT",
   "private": false,
   "scripts": {
+    "clean": "yarn run rimraf dist",
+    "build": "yarn clean && yarn run webpack",
     "lint": "eslint 'src/**/*.{js,ts,tsx}'",
     "prettier": "prettier src",
     "test": "jest"
@@ -41,6 +43,7 @@
     "@typescript-eslint/eslint-plugin": "^4.19.0",
     "@typescript-eslint/parser": "^4.19.0",
     "babel-jest": "^26.6.3",
+    "babel-loader": "^8.2.2",
     "eslint": "^7.23.0",
     "eslint-config-prettier": "^8.1.0",
     "eslint-plugin-prettier": "^3.3.1",
@@ -50,6 +53,9 @@
     "prettier": "^2.2.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
-    "typescript": "^4.2.3"
+    "rimraf": "^3.0.2",
+    "typescript": "^4.2.3",
+    "webpack": "^5.28.0",
+    "webpack-cli": "^4.6.0"
   }
 }
