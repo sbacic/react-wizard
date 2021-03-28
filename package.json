@@ -1,12 +1,31 @@
 {
   "name": "wizard",
-  "version": "0.0.1",
-  "description": "A wizard helper for multi-page forms.",
+  "version": "1.0.0",
+  "description": "A wizard helper for React multistep forms.",
   "main": "index.js",
   "license": "MIT",
   "private": false,
   "scripts": {
     "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sbacic/wizard.git"
+  },
+  "bugs": {
+    "url": "https://github.com/sbacic/wizard/issues"
+  },
+  "keywords": [
+    "react",
+    "wizard",
+    "formik",
+    "form",
+    "step",
+    "multistep"
+  ],
+  "author": {
+    "name": "Slaven Bačić",
+    "email": "bacic.slaven@gmail.com"
   },
   "dependencies": {},
   "devDependencies": {
