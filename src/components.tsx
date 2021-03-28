@@ -2,10 +2,13 @@ import React from 'react';
 import { useState } from 'react';
 import { WizardContext, useWizard } from './hook';
 
+interface Child {
+  type?: { name?: string };
+}
+
 const count = (children: React.ReactNode) => {
   const array = React.Children.toArray(children);
-  return array.filter((child) => (child as any)?.type?.name !== 'Optional')
-    .length;
+  return array.filter((child) => (child as Child)?.type?.name !== 'Optional').length;
 };
 
 /**
@@ -42,10 +45,7 @@ export interface WizardProps {
  * Context provider for the WizardContext.
  * @param startingStep Which child to render on first render. Zero-indexed. Default is 0, or the very first child.
  */
-export const ContextWrapper: React.FC<WizardProps> = ({
-  children,
-  startingStep,
-}) => {
+export const ContextWrapper: React.FC<WizardProps> = ({ children, startingStep }) => {
   const [values, setValues] = useState({});
   const [step, setStep] = useState(startingStep);
   const [optional, setOptional] = useState<undefined | number>(undefined);
@@ -58,26 +58,16 @@ export const ContextWrapper: React.FC<WizardProps> = ({
     setOptional,
   };
 
-  return (
-    <WizardContext.Provider value={context}>{children}</WizardContext.Provider>
-  );
+  return <WizardContext.Provider value={context}>{children}</WizardContext.Provider>;
 };
 
 /**
  * The top level Wizard component wrapper.
  */
-export const Wizard: React.FC<WizardProps> = ({
-  children,
-  startingStep = 0,
-  useWizardRenderer = true,
-}) => {
+export const Wizard: React.FC<WizardProps> = ({ children, startingStep = 0, useWizardRenderer = true }) => {
   return (
     <ContextWrapper startingStep={startingStep}>
-      {useWizardRenderer ? (
-        <WizardRenderer>{children}</WizardRenderer>
-      ) : (
-        children
-      )}
+      {useWizardRenderer ? <WizardRenderer>{children}</WizardRenderer> : children}
     </ContextWrapper>
   );
 };

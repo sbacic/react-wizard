@@ -65,9 +65,7 @@ describe('basic tests', () => {
   });
 
   it('next() works', () => {
-    const wrapper = ({ children }) => (
-      <Wizard useWizardRenderer={false}>{children}</Wizard>
-    );
+    const wrapper = ({ children }) => <Wizard useWizardRenderer={false}>{children}</Wizard>;
     const hook = renderHook(() => useWizard(), { wrapper });
     expect(hook.result.current.step).toBe(0);
     act(() => hook.result.current.next());

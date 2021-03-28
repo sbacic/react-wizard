@@ -2,15 +2,19 @@ import { createContext, useContext } from 'react';
 
 export const WizardContext = createContext(undefined);
 
-export const useWizard = () => {
-  const {
-    setStep,
-    step,
-    values,
-    setValues,
-    setOptional,
-    optional,
-  } = useContext(WizardContext);
+interface Response {
+  next: () => void;
+  back: () => void;
+  go: (to: number, optional?: boolean) => void;
+  store: (fields: { [key: string]: unknown }) => void;
+  clear: (keys?: string[]) => void;
+  step: number;
+  optional: number | undefined;
+  values: { [key: string]: unknown };
+}
+
+export const useWizard = (): Response => {
+  const { setStep, step, values, setValues, setOptional, optional } = useContext(WizardContext);
 
   /**
    * Go to the next step in the wizard.
@@ -37,7 +41,7 @@ export const useWizard = () => {
    * @param to
    */
   const go = (to: number, optional?: boolean) => {
-    if (optional) {
+    if (optional !== undefined) {
       setOptional(to);
     } else {
       setStep(to);
@@ -60,14 +64,11 @@ export const useWizard = () => {
    * @param keys List of keys to be removed. If none are provided, all the values are removed.
    */
   const clear = (keys?: string[]) => {
-    setValues((values) =>
-      keys
-        ? Object.fromEntries(
-            Object.entries(values).filter(([key]) => !keys.includes(key))
-          )
-        : {}
-    );
+    const filterByKeys = (values: { [key: string]: unknown }, keys: string[]) =>
+      Object.fromEntries(Object.entries(values).filter(([key]) => !keys.includes(key)));
+
+    setValues((values) => (keys ? filterByKeys(values, keys) : {}));
   };
 
-  return { next, back, go, step, store, clear, values, optional, setOptional };
+  return { next, back, go, step, store, clear, values, optional };
 };
