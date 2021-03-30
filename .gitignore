@@ -2,3 +2,4 @@ node_modules
 .vscode/settings.json
 yarn-error.log
 dist
+*.tgz
