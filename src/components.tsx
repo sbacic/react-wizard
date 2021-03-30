@@ -15,7 +15,7 @@ const count = (children: React.ReactNode) => {
  * A component that renders only the current step in the Wizard.
  * @param children Children to render.
  */
-export const WizardRenderer: React.FC = ({ children }) => {
+export const Steps: React.FC = ({ children }) => {
   const { step, optional } = useWizard();
   const max = count(children) - 1;
   const index = Math.max(Math.min(step, max), 0);
@@ -35,10 +35,10 @@ export interface WizardProps {
    */
   startingStep?: number;
   /**
-   * Whether to render children with the WizardRenderer component. Set to false if you want to add additional context providers first.
+   * Whether to wrap children with the Steps component. Set to false if you want to add additional context providers first.
    * Default is true.
    */
-  useWizardRenderer?: boolean;
+  wrapInSteps?: boolean;
 }
 
 /**
@@ -64,11 +64,9 @@ export const ContextWrapper: React.FC<WizardProps> = ({ children, startingStep }
 /**
  * The top level Wizard component wrapper.
  */
-export const Wizard: React.FC<WizardProps> = ({ children, startingStep = 0, useWizardRenderer = true }) => {
+export const Wizard: React.FC<WizardProps> = ({ children, startingStep = 0, wrapInSteps = true }) => {
   return (
-    <ContextWrapper startingStep={startingStep}>
-      {useWizardRenderer ? <WizardRenderer>{children}</WizardRenderer> : children}
-    </ContextWrapper>
+    <ContextWrapper startingStep={startingStep}>{wrapInSteps ? <Steps>{children}</Steps> : children}</ContextWrapper>
   );
 };
 

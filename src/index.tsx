@@ -1,3 +1,4 @@
 import { useWizard, WizardContext } from './hook';
-import { Wizard, WizardRenderer, Optional } from './components';
-export { useWizard, WizardContext, WizardRenderer, Wizard, Optional };
+import { Wizard, Steps, Optional } from './components';
+
+export { useWizard, WizardContext, Steps, Wizard, Optional };

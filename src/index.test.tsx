@@ -65,7 +65,7 @@ describe('basic tests', () => {
   });
 
   it('next() works', () => {
-    const wrapper = ({ children }) => <Wizard useWizardRenderer={false}>{children}</Wizard>;
+    const wrapper = ({ children }) => <Wizard wrapInSteps={false}>{children}</Wizard>;
     const hook = renderHook(() => useWizard(), { wrapper });
     expect(hook.result.current.step).toBe(0);
     act(() => hook.result.current.next());
@@ -74,7 +74,7 @@ describe('basic tests', () => {
 
   it('back() works', () => {
     const wrapper = ({ children }) => (
-      <Wizard startingStep={2} useWizardRenderer={false}>
+      <Wizard startingStep={2} wrapInSteps={false}>
         {children}
       </Wizard>
     );
@@ -87,7 +87,7 @@ describe('basic tests', () => {
 
   it('go() works', () => {
     const wrapper = ({ children }) => (
-      <Wizard startingStep={0} useWizardRenderer={false}>
+      <Wizard startingStep={0} wrapInSteps={false}>
         {children}
       </Wizard>
     );
@@ -100,7 +100,7 @@ describe('basic tests', () => {
 
   it('go() with optional set to true works', () => {
     const wrapper = ({ children }) => (
-      <Wizard startingStep={0} useWizardRenderer={false}>
+      <Wizard startingStep={0} wrapInSteps={false}>
         {children}
       </Wizard>
     );
@@ -114,7 +114,7 @@ describe('basic tests', () => {
 
   it('store() works', async () => {
     const wrapper = ({ children }) => (
-      <Wizard startingStep={0} useWizardRenderer={false}>
+      <Wizard startingStep={0} wrapInSteps={false}>
         {children}
       </Wizard>
     );
@@ -131,7 +131,7 @@ describe('basic tests', () => {
 
   it('clear() works', async () => {
     const wrapper = ({ children }) => (
-      <Wizard startingStep={0} useWizardRenderer={false}>
+      <Wizard startingStep={0} wrapInSteps={false}>
         {children}
       </Wizard>
     );
