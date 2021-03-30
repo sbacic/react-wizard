@@ -3,7 +3,7 @@ const path = require('path');
 module.exports = {
   entry: './src/index.tsx',
   output: {
-    library: 'wizard',
+    library: 'react-wizard',
     libraryTarget: 'umd',
     path: path.join(__dirname, 'dist'),
     filename: 'index.js',
@@ -13,7 +13,7 @@ module.exports = {
     rules: [
       {
         test: /\.tsx|\.ts$/,
-        loader: 'babel-loader',
+        loader: 'ts-loader',
         exclude: /node_modules/,
       },
     ],
@@ -21,7 +21,11 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.jsx', '.ts', '.tsx'],
     alias: {
-      wizard: path.resolve(__dirname, 'src'),
+      'react-wizard': path.resolve(__dirname, 'src'),
     },
+  },
+  externals: {
+    react: 'react',
+    'react-dom': 'react-dom',
   },
 };
