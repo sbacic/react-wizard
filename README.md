@@ -11,14 +11,14 @@ React-Wizard is a React library for handling multi-page forms.
 
 ## Installation
 
-`yarn add sbacic/react-wizard`
+`yarn add @sbacic/react-wizard`
 
 ## Examples
 
 ### Basic example:
 
 ```JSX
-import { Wizard } from "sbacic/react-wizard";
+import { Wizard } from "@sbacic/react-wizard";
 
 <Wizard>
   <Page1 />
@@ -30,7 +30,7 @@ import { Wizard } from "sbacic/react-wizard";
 ### With optional pages:
 
 ```JSX
-import { Wizard, Optional } from "sbacic/react-wizard";
+import { Wizard, Optional } from "@sbacic/react-wizard";
 
 <Wizard>
   <Page1 />
@@ -46,7 +46,7 @@ import { Wizard, Optional } from "sbacic/react-wizard";
 ### With additional context added in:
 
 ```JSX
-import { Wizard, Optional, Steps, useWizard } from "sbacic/react-wizard";
+import { Wizard, Optional, Steps, useWizard } from "@sbacic/react-wizard";
 import { Formik } from "formik";
 
 const FormWithFormikContext = () => {
