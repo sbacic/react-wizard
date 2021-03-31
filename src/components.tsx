@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useState } from 'react';
 import { WizardContext, useWizard } from './hook';
 
@@ -16,9 +16,14 @@ const count = (children: React.ReactNode) => {
  * @param children Children to render.
  */
 export const Steps: React.FC = ({ children }) => {
+  const { setTotal } = useContext(WizardContext);
   const { step, optional } = useWizard();
-  const max = count(children) - 1;
-  const index = Math.max(Math.min(step, max), 0);
+  const total = count(children);
+  const index = Math.max(Math.min(step, total - 1), 0);
+
+  useEffect(() => {
+    setTotal(total);
+  }, [total]);
 
   if (children && optional === undefined) {
     return children[index] || null;
@@ -46,6 +51,7 @@ export interface WizardProps {
  * @param startingStep Which child to render on first render. Zero-indexed. Default is 0, or the very first child.
  */
 export const ContextWrapper: React.FC<WizardProps> = ({ children, startingStep }) => {
+  const [total, setTotal] = useState();
   const [values, setValues] = useState({});
   const [step, setStep] = useState(startingStep);
   const [optional, setOptional] = useState<undefined | number>(undefined);
@@ -56,6 +62,8 @@ export const ContextWrapper: React.FC<WizardProps> = ({ children, startingStep }
     setValues,
     optional,
     setOptional,
+    total,
+    setTotal,
   };
 
   return <WizardContext.Provider value={context}>{children}</WizardContext.Provider>;

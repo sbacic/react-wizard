@@ -11,10 +11,13 @@ interface Response {
   step: number;
   optional: number | undefined;
   values: { [key: string]: unknown };
+  isFirst: boolean;
+  isLast: boolean;
+  total: number;
 }
 
 export const useWizard = (): Response => {
-  const { setStep, step, values, setValues, setOptional, optional } = useContext(WizardContext);
+  const { setStep, step, values, setValues, setOptional, optional, total } = useContext(WizardContext);
 
   /**
    * Go to the next step in the wizard.
@@ -70,5 +73,27 @@ export const useWizard = (): Response => {
     setValues((values) => (keys ? filterByKeys(values, keys) : {}));
   };
 
-  return { next, back, go, step, store, clear, values, optional };
+  /**
+   * Are we on the first step of the Wizard?
+   */
+  const isFirst = step === 0 && !optional;
+
+  /**
+   * Are we on the last step of the Wizard?
+   */
+  const isLast = !total || step + 1 === total;
+
+  return {
+    next,
+    back,
+    go,
+    step,
+    store,
+    clear,
+    values,
+    optional,
+    total: total || 0,
+    isFirst,
+    isLast,
+  };
 };

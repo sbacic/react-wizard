@@ -2,6 +2,7 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { renderHook, act } from '@testing-library/react-hooks';
 import { useWizard, Wizard, Optional } from './index';
+import { Steps } from './components';
 
 describe('basic tests', () => {
   it('only the current step is shown', () => {
@@ -62,6 +63,77 @@ describe('basic tests', () => {
     expect(screen.queryByText('Step 3')).toBeTruthy();
     expect(screen.queryByText('Step 1a')).toBeFalsy();
     expect(screen.queryByText('Step 1b')).toBeFalsy();
+  });
+
+  const Component = () => {
+    const { total, isFirst, isLast, step } = useWizard();
+
+    return (
+      <div>
+        <span>step: {step}</span>
+        <span>total: {total}</span>
+        <span>isFirst: {isFirst && 'yes'}</span>
+        <span>isLast: {isLast && 'yes'}</span>
+      </div>
+    );
+  };
+
+  it('isFirst works as expected', () => {
+    render(
+      <Wizard wrapInSteps={false}>
+        <Steps>
+          <div></div>
+          <div></div>
+          <div></div>
+        </Steps>
+        <Component />
+      </Wizard>
+    );
+
+    expect(screen.getByText('isFirst: yes')).toBeTruthy();
+    expect(screen.queryByText('isLast: yes')).toBeFalsy();
+  });
+
+  it('isLast works expected', () => {
+    render(
+      <Wizard wrapInSteps={false} startingStep={2}>
+        <Steps>
+          <div></div>
+          <div></div>
+          <div></div>
+        </Steps>
+        <Component />
+      </Wizard>
+    );
+
+    expect(screen.queryByText('isFirst: yes')).toBeFalsy();
+    expect(screen.getByText('isLast: yes')).toBeTruthy();
+  });
+
+  it('total displays the correct number of children', () => {
+    render(
+      <Wizard wrapInSteps={false} startingStep={2}>
+        <Steps>
+          <div></div>
+          <div></div>
+          <div></div>
+        </Steps>
+        <Component />
+      </Wizard>
+    );
+
+    expect(screen.queryByText('total: 3')).toBeTruthy();
+  });
+
+  it('total returns 0 when there are no children', () => {
+    render(
+      <Wizard wrapInSteps={false} startingStep={2}>
+        <Steps></Steps>
+        <Component />
+      </Wizard>
+    );
+
+    expect(screen.getByText('total: 0')).toBeTruthy();
   });
 
   it('next() works', () => {

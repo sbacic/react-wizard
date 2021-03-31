@@ -164,6 +164,14 @@ A number representing the current step in the wizard. Zero-indexed.
 
 A number representing the current optional step. If undefined, no optional page is shown.
 
+`isFirst`
+
+Whether the current step is the first step in the Wizard.
+
+`isLast`
+
+Whether the current step is the last step in the Wizard.
+
 ## Development
 
 1. Clone the repository:
