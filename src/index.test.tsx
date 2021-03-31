@@ -65,6 +65,20 @@ describe('basic tests', () => {
     expect(screen.queryByText('Step 1b')).toBeFalsy();
   });
 
+  it('Optional is rendered even if there are no regular steps', () => {
+    render(
+      <Wizard wrapInSteps={false} startingOptional={0}>
+        <Steps>
+          <Optional>
+            <div>Hello world!</div>
+          </Optional>
+        </Steps>
+      </Wizard>
+    );
+
+    expect(screen.getByText('Hello world!')).toBeTruthy();
+  });
+
   const Component = () => {
     const { total, isFirst, isLast, step } = useWizard();
 

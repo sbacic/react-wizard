@@ -11,25 +11,31 @@ const count = (children: React.ReactNode) => {
   return array.filter((child) => (child as Child)?.type?.name !== 'Optional').length;
 };
 
+const isOptional = (child: React.ReactNode) => {
+  return (child as Child)?.type?.name === 'Optional';
+};
+
 /**
  * A component that renders only the current step in the Wizard.
  * @param children Children to render.
  */
 export const Steps: React.FC = ({ children }) => {
-  const { setTotal } = useContext(WizardContext);
+  const { setTotal, total } = useContext(WizardContext);
   const { step, optional } = useWizard();
-  const total = count(children);
+  const length = count(children);
   const index = Math.max(Math.min(step, total - 1), 0);
 
   useEffect(() => {
-    setTotal(total);
-  }, [total]);
+    setTotal(length);
+  }, [length]);
 
-  if (children && optional === undefined) {
-    return children[index] || null;
-  } else {
-    return null;
-  }
+  return (
+    <>
+      {React.Children.toArray(children).filter((child, i) => {
+        return (i === index && optional === undefined && total !== undefined) || isOptional(child);
+      })}
+    </>
+  );
 };
 
 export interface WizardProps {
@@ -44,17 +50,18 @@ export interface WizardProps {
    * Default is true.
    */
   wrapInSteps?: boolean;
+  startingOptional?: number;
 }
 
 /**
  * Context provider for the WizardContext.
  * @param startingStep Which child to render on first render. Zero-indexed. Default is 0, or the very first child.
  */
-export const ContextWrapper: React.FC<WizardProps> = ({ children, startingStep }) => {
+export const ContextWrapper: React.FC<WizardProps> = ({ children, startingStep, startingOptional }) => {
   const [total, setTotal] = useState();
   const [values, setValues] = useState({});
   const [step, setStep] = useState(startingStep);
-  const [optional, setOptional] = useState<undefined | number>(undefined);
+  const [optional, setOptional] = useState<undefined | number>(startingOptional);
   const context = {
     step,
     setStep,
@@ -72,9 +79,16 @@ export const ContextWrapper: React.FC<WizardProps> = ({ children, startingStep }
 /**
  * The top level Wizard component wrapper.
  */
-export const Wizard: React.FC<WizardProps> = ({ children, startingStep = 0, wrapInSteps = true }) => {
+export const Wizard: React.FC<WizardProps> = ({
+  children,
+  startingStep = 0,
+  startingOptional = undefined,
+  wrapInSteps = true,
+}) => {
   return (
-    <ContextWrapper startingStep={startingStep}>{wrapInSteps ? <Steps>{children}</Steps> : children}</ContextWrapper>
+    <ContextWrapper startingStep={startingStep} startingOptional={startingOptional}>
+      {wrapInSteps ? <Steps>{children}</Steps> : children}
+    </ContextWrapper>
   );
 };
 
@@ -87,9 +101,11 @@ export const Optional: React.FC = ({ children }) => {
   const max = count(children) - 1;
   const index = Math.max(Math.min(optional, max), 0);
 
-  if (children && optional !== undefined) {
-    return children[index] || null;
-  } else {
-    return null;
-  }
+  return (
+    <>
+      {React.Children.toArray(children).filter((child, i) => {
+        return (i === index && optional !== undefined) || isOptional(child);
+      })}
+    </>
+  );
 };

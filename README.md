@@ -110,6 +110,10 @@ Your form pages should be wrapped in this to receive the Wizard context. It acce
 
 The starting step of the Wizard. Default is 0.
 
+`startingOptional`: number
+
+An Optional step to render on the first render. Default is undefined.
+
 `wrapInSteps`: boolean
 
 Whether to wrap the children in `<Steps>` or render them normally. Default is true.
