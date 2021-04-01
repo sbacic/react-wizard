@@ -32,7 +32,7 @@ export const useWizard = (): Response => {
    * If the current step is optional, go back to the previous non-optional step.
    */
   const back = () => {
-    if (optional) {
+    if (optional !== undefined) {
       setOptional(undefined);
     } else {
       setStep(Math.max(step - 1, 0));
