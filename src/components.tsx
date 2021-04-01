@@ -3,16 +3,16 @@ import { useState } from 'react';
 import { WizardContext, useWizard } from './hook';
 
 interface Child {
-  type?: { name?: string };
+  type?: unknown;
 }
 
 const count = (children: React.ReactNode) => {
   const array = React.Children.toArray(children);
-  return array.filter((child) => (child as Child)?.type?.name !== 'Optional').length;
+  return array.filter((child) => (child as Child)?.type !== Optional).length;
 };
 
 const isOptional = (child: React.ReactNode) => {
-  return (child as Child)?.type?.name === 'Optional';
+  return (child as Child)?.type === Optional;
 };
 
 /**
