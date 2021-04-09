@@ -3,6 +3,7 @@ const path = require('path');
 module.exports = {
   entry: './src/index.tsx',
   output: {
+    globalObject: 'this',
     library: 'react-wizard',
     libraryTarget: 'umd',
     path: path.join(__dirname, 'dist'),
