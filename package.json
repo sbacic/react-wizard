@@ -1,6 +1,6 @@
 {
   "name": "@sbacic/react-wizard",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A wizard helper for React forms.",
   "main": "./dist/index.js",
   "license": "MIT",
