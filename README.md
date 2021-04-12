@@ -144,9 +144,9 @@ Go to the next page in form. If used on an optional page, it returns you to the 
 
 Go to the previous page in the form. If used on an optional page, it returns you to the main page you were at (eg: if you were on step 2 and went to an optional page, it returns you to step 2).
 
-`go(step: number, optional?: boolean)`
+`go(step: number, goToOptional?: true)`
 
-Jump to a specific step in the form. If optional is set to true, it jumps to that optional page instead.
+Jump to a specific step in the form. If goToOptional is set to true, it jumps to that optional page instead.
 
 `store(fields: { [key: string]: unknown })`
 

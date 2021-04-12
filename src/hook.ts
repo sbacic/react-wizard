@@ -42,9 +42,10 @@ export const useWizard = (): Response => {
   /**
    * Jump to a specific step in the wizard.
    * @param to
+   * @param goToOptional Whether to jump to an optional step
    */
-  const go = (to: number, optional?: boolean) => {
-    if (optional !== undefined) {
+  const go = (to: number, goToOptional?: true) => {
+    if (goToOptional !== undefined) {
       setOptional(to);
     } else {
       setStep(to);
