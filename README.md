@@ -200,4 +200,4 @@ or
 
 ## Demo
 
-TODO: Add live demo link
+https://sbacic.github.io/react-wizard-demo/
